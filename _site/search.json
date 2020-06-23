@@ -1,0 +1,25 @@
+[
+  
+    {
+
+      "title"    : "A second test post",
+      "url"      : "/2020/06/22/second-test",
+      "category" : "",
+      "tags"     : "css",
+      "date"     : "2020-06-22 00:00:00 -0500",
+      "discription" : "oh god im testing im testing"
+
+    } ,
+  
+    {
+
+      "title"    : "This is my test post",
+      "url"      : "/2020/06/22/god-is-real",
+      "category" : "",
+      "tags"     : "css",
+      "date"     : "2020-06-22 00:00:00 -0500",
+      "discription" : "This is my first sample post for my cool cool blog"
+
+    } 
+  
+]
