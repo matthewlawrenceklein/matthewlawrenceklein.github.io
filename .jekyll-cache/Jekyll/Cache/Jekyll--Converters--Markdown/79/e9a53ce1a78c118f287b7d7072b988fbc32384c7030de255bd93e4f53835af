@@ -1,0 +1,28 @@
+I"<h3 id="the-starting-point">The starting point</h3>
+
+<p>I don’t think I’m alone in saying that my first foray into software development began when I had an idea for an app that I wanted bad enough
+that when I couldn’t find it, I decided to try and learn how to make it myself. A few months later I’ve learned a little enough to know that I know
+precious little, but I finally feel like I’m on a path where I can see the light at the end of the tunnel.</p>
+
+<p>I’m going to use these blog posts as an opportunity to chronicle the process of developing an app <em>alongside</em> developing a skillset. Let’s go!</p>
+
+<h3 id="chompr---or-idk-what-do-you-feel-like">Chompr - Or, “IDK, what do you feel like?”</h3>
+
+<p>I’ve spent <strong>way</strong> too many nights laying on the couch with a friend or partner doing the back-and-forth dance of “what are you in the mood to eat”. It’s a vicious cycle of hunger, indecision, and ultimately, the resignation of eventually landing on a choice that no one’s particularly excited for. Literally any alternative would be prefarable: a giant plinko board, prize wheel, or even… an <strong>app</strong>. Ideally an app that can help its users choose a meal option</p>
+<ul>
+  <li>easily
+    <ul>
+      <li>second thing</li>
+    </ul>
+  </li>
+  <li>quickly</li>
+  <li>intuitively</li>
+  <li>fairly, with respect to each chooser</li>
+</ul>
+
+<!-- 
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">def foo
+  puts &#39;foo&#39;
+end</code></pre></figure>
+ -->
+:ET
