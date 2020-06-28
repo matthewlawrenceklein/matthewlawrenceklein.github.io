@@ -1,0 +1,135 @@
+I"|<h3 id="a-starting-point">A Starting Point</h3>
+
+<p>I don’t think I’m alone in saying that my first foray into software development began when I had an idea for an app that I wanted bad enough
+that when I couldn’t find it, I decided to try and learn how to make it myself. A few months later I’ve learned enough to know that I know
+precious little, but I finally feel like I’m on a path where I can see the <em>app</em> at the end of the tunnel.</p>
+
+<p>I’m going to use these blog posts as an opportunity to chronicle the process of developing an app <em>alongside</em> developing a skillset. Let’s go!</p>
+
+<h3 id="chompr---or-idk-what-do-you-feel-like">chompr - Or, “IDK, what do you feel like?”</h3>
+
+<p>I’ve spent <strong>way</strong> too many nights laying on the couch with a friend or partner doing the back-and-forth dance of “what are you in the mood to eat”. It’s a vicious cycle of hunger, indecision, and ultimately, the resignation of eventually landing on a choice that no one’s particularly excited for. Literally any alternative would be prefarable: a giant plinko board, prize wheel, or even… an <strong>app</strong>. Ideally an app that can help its users choose a meal option</p>
+
+<p><img src="https://media.giphy.com/media/iDInMGfkhlsuZGXjGa/giphy.gif" alt="wheel" class="img-responsive" /></p>
+
+<p>![choice wheel]</p>
+<ul>
+  <li>easily</li>
+  <li>quickly</li>
+  <li>intuitively</li>
+  <li>fairly, with respect to each chooser</li>
+</ul>
+
+<p><img src="https://rciemecdn.imgix.net/API/Blog/tapas_800px.jpg" alt="lots of food" class="img-responsive" /></p>
+
+<p>At this point, I’ve put together a <em>wish list</em> of features/functionality that I’d like to pursue, with varying degrees of complexity. Of course, it’s all pretty complex for me right now, but I’m attemping to tackle it in small chunks. For functionality, I’m hoping to build out an app that:</p>
+
+<ul>
+  <li>accepts a geographic location (user-input zipcode? cellular location data? Google web location data?)</li>
+  <li>allows for either delivery or take-out</li>
+  <li>accepts a number of choosers, with names for each (I think the process starts to break down with 5+ choosers)</li>
+  <li>provides the choosers with a randomized set of eight food categories (ie Thai, Korean, BBQ, Pub Fare)</li>
+  <li>randomly selects a chooser to select a category to eliminate, within a time limit (30 second?)</li>
+  <li>Once choosers have eliminated all but one option, the app instantiates a search for nearby restaurants in that category.</li>
+</ul>
+
+<p>I’ve got some stretch goals too, including user auth and API integration (grubhub? uber eats?). And any mobile development is firmly in the stretch category.</p>
+
+<h3 id="humble-beginnings---lets-write-some-code">Humble Beginnings - Let’s write some code</h3>
+
+<p>I’ve got a couple of big ol’ lists of stuff I don’t know how to do yet up there, but I can start by building some base functionality. First, let’s figure out a way to randomly generate eight food categories from a much larger “database” of catagories.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">def create_choices
+    options = %w[Thai Sushi Japanese Southern Korean Greek Armenian Italian Pizza Burgers 
+    Sandwiches BBQ Mexican American Fast-Food Diner Chinese Pub-Fare]
+    
+    mixed = options.shuffle
+    
+    $choice_set = []
+
+    (0...8).map { |i| $choice_set.push(mixed[i]) }
+end</code></pre></figure>
+
+<p>Cool, so now we’ve got the ability to grab a new and randomized choice set every time. Now we should try and grab the number of chompers, and allow for naming each of them. Again, we’ll probably want to keep the max chompers to 4.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">def get_users
+        print &quot;&gt; &quot;
+        $users = $stdin.gets.chomp 
+
+        case 
+        when $users.to_i &lt;= 4
+            puts &quot;~&quot; * 15
+            puts &quot;super&quot;
+        when $users.to_i &gt; 4
+            puts &quot;~&quot; * 15
+            puts &quot;too many folx&quot;
+            get_users()
+        else
+            puts &quot;~&quot; * 15
+            puts &quot;invalid input&quot;
+            get_users()
+        end
+        puts &quot;~&quot; * 15
+    end</code></pre></figure>
+
+<p>And let’s get names for each chomper</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">def name_users
+
+        $user_array = []
+        i = 0
+    
+        while i &lt; $users.to_i do
+            print &quot;user #{i + 1} name &gt; &quot;
+            $user_array[i] = $stdin.gets.chomp
+            i += 1
+        end
+
+``
+        puts &quot;super, we&#39;ve got&quot;
+        puts &quot;~&quot; * 15
+        puts $user_array
+        puts &quot;~&quot; * 15
+    end</code></pre></figure>
+
+<p>Finally, let’s layout the logic for each elimination round. We want to</p>
+<ul>
+  <li>randomly select a chomper to make a selection</li>
+  <li>show the chomper the current food options</li>
+  <li>take input for the option they’d like to eliminate</li>
+  <li>remove the option from the options set</li>
+  <li>repeat until one option remains</li>
+</ul>
+
+<p>Here’s what I’ve got so far</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">def elimination_round
+    
+        while $choice_set.length &gt; 1
+            shuffled_users = $user_array.shuffle()
+            puts &quot;#{shuffled_users[0]}, you&#39;ve been selected to eliminate an option&quot;
+            puts &quot;what would you like to eliminate?&quot;
+            print &quot;&gt; &quot;
+            eliminate = $stdin.gets.chomp
+
+            $choice_set.each do |name|
+                if name == eliminate
+                    $choice_set.delete(name)
+                end
+            end
+
+            puts &quot;your options are now&quot;
+            puts &quot;~&quot; * 15
+            puts $choice_set
+            puts &quot;~&quot; * 15
+        end
+    end</code></pre></figure>
+
+<p>Excellent! Now we’re making progress!
+<img src="https://media.giphy.com/media/40F4fLvOkInEk/giphy.gif" alt="happy racoon" /></p>
+
+<h3 id="coming-up-next">Coming Up Next</h3>
+
+<p>We’ve not got the basic logic functioning, and we’re set to take user input from the command line. My next step is going to be packaging this functionality into a 
+CLI ruby gem, and <em>shipping</em> a first <em>completed</em> product - so to speak. C’yall in a few weeks!</p>
+:ET

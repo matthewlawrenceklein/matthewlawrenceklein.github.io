@@ -4,7 +4,7 @@
  <title>Technical Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2020-06-25T21:57:46-05:00</updated>
+ <updated>2020-06-28T08:29:08-05:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name></name>
@@ -17,24 +17,29 @@
    <link href="http://localhost:4000/2020/06/25/chompr-proof-of-concept"/>
    <updated>2020-06-25T00:00:00-05:00</updated>
    <id>http://localhost:4000/2020/06/25/chompr-proof-of-concept</id>
-   <content type="html">&lt;h3 id=&quot;the-starting-point&quot;&gt;The starting point&lt;/h3&gt;
+   <content type="html">&lt;h3 id=&quot;a-starting-point&quot;&gt;A Starting Point&lt;/h3&gt;
 
 &lt;p&gt;I don’t think I’m alone in saying that my first foray into software development began when I had an idea for an app that I wanted bad enough
-that when I couldn’t find it, I decided to try and learn how to make it myself. A few months later I’ve learned a little enough to know that I know
-precious little, but I finally feel like I’m on a path where I can see the light at the end of the tunnel.&lt;/p&gt;
+that when I couldn’t find it, I decided to try and learn how to make it myself. A few months later I’ve learned enough to know that I know
+precious little, but I finally feel like I’m on a path where I can see the &lt;em&gt;app&lt;/em&gt; at the end of the tunnel.&lt;/p&gt;
 
 &lt;p&gt;I’m going to use these blog posts as an opportunity to chronicle the process of developing an app &lt;em&gt;alongside&lt;/em&gt; developing a skillset. Let’s go!&lt;/p&gt;
 
-&lt;h3 id=&quot;chompr---or-idk-what-do-you-feel-like&quot;&gt;Chompr - Or, “IDK, what do you feel like?”&lt;/h3&gt;
+&lt;h3 id=&quot;chompr---or-idk-what-do-you-feel-like&quot;&gt;chompr - Or, “IDK, what do you feel like?”&lt;/h3&gt;
 
 &lt;p&gt;I’ve spent &lt;strong&gt;way&lt;/strong&gt; too many nights laying on the couch with a friend or partner doing the back-and-forth dance of “what are you in the mood to eat”. It’s a vicious cycle of hunger, indecision, and ultimately, the resignation of eventually landing on a choice that no one’s particularly excited for. Literally any alternative would be prefarable: a giant plinko board, prize wheel, or even… an &lt;strong&gt;app&lt;/strong&gt;. Ideally an app that can help its users choose a meal option&lt;/p&gt;
 
+&lt;p&gt;&lt;img src=&quot;https://media.giphy.com/media/iDInMGfkhlsuZGXjGa/giphy.gif&quot; alt=&quot;wheel&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;![choice wheel]&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;easily&lt;/li&gt;
   &lt;li&gt;quickly&lt;/li&gt;
   &lt;li&gt;intuitively&lt;/li&gt;
   &lt;li&gt;fairly, with respect to each chooser&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://rciemecdn.imgix.net/API/Blog/tapas_800px.jpg&quot; alt=&quot;lots of food&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;At this point, I’ve put together a &lt;em&gt;wish list&lt;/em&gt; of features/functionality that I’d like to pursue, with varying degrees of complexity. Of course, it’s all pretty complex for me right now, but I’m attemping to tackle it in small chunks. For functionality, I’m hoping to build out an app that:&lt;/p&gt;
 
@@ -51,7 +56,7 @@ precious little, but I finally feel like I’m on a path where I can see the lig
 
 &lt;h3 id=&quot;humble-beginnings---lets-write-some-code&quot;&gt;Humble Beginnings - Let’s write some code&lt;/h3&gt;
 
-&lt;p&gt;I’ve got a couple of big ol’ lists of stuff I don’t know how to do yet up there, but I can start buy building some base funcionality. First, let’s figure out a way to randomly generate eight food categories from a much larger “database” of catagories.&lt;/p&gt;
+&lt;p&gt;I’ve got a couple of big ol’ lists of stuff I don’t know how to do yet up there, but I can start by building some base functionality. First, let’s figure out a way to randomly generate eight food categories from a much larger “database” of catagories.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;def create_choices
     options = %w[Thai Sushi Japanese Southern Korean Greek Armenian Italian Pizza Burgers 
@@ -63,6 +68,89 @@ precious little, but I finally feel like I’m on a path where I can see the lig
 
     (0...8).map { |i| $choice_set.push(mixed[i]) }
 end&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Cool, so now we’ve got the ability to grab a new and randomized choice set every time. Now we should try and grab the number of chompers, and allow for naming each of them. Again, we’ll probably want to keep the max chompers to 4.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;def get_users
+        print &amp;quot;&amp;gt; &amp;quot;
+        $users = $stdin.gets.chomp 
+
+        case 
+        when $users.to_i &amp;lt;= 4
+            puts &amp;quot;~&amp;quot; * 15
+            puts &amp;quot;super&amp;quot;
+        when $users.to_i &amp;gt; 4
+            puts &amp;quot;~&amp;quot; * 15
+            puts &amp;quot;too many folx&amp;quot;
+            get_users()
+        else
+            puts &amp;quot;~&amp;quot; * 15
+            puts &amp;quot;invalid input&amp;quot;
+            get_users()
+        end
+        puts &amp;quot;~&amp;quot; * 15
+    end&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;And let’s get names for each chomper&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;def name_users
+
+        $user_array = []
+        i = 0
+    
+        while i &amp;lt; $users.to_i do
+            print &amp;quot;user #{i + 1} name &amp;gt; &amp;quot;
+            $user_array[i] = $stdin.gets.chomp
+            i += 1
+        end
+
+``
+        puts &amp;quot;super, we&amp;#39;ve got&amp;quot;
+        puts &amp;quot;~&amp;quot; * 15
+        puts $user_array
+        puts &amp;quot;~&amp;quot; * 15
+    end&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Finally, let’s layout the logic for each elimination round. We want to&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;randomly select a chomper to make a selection&lt;/li&gt;
+  &lt;li&gt;show the chomper the current food options&lt;/li&gt;
+  &lt;li&gt;take input for the option they’d like to eliminate&lt;/li&gt;
+  &lt;li&gt;remove the option from the options set&lt;/li&gt;
+  &lt;li&gt;repeat until one option remains&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here’s what I’ve got so far&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;def elimination_round
+    
+        while $choice_set.length &amp;gt; 1
+            shuffled_users = $user_array.shuffle()
+            puts &amp;quot;#{shuffled_users[0]}, you&amp;#39;ve been selected to eliminate an option&amp;quot;
+            puts &amp;quot;what would you like to eliminate?&amp;quot;
+            print &amp;quot;&amp;gt; &amp;quot;
+            eliminate = $stdin.gets.chomp
+
+            $choice_set.each do |name|
+                if name == eliminate
+                    $choice_set.delete(name)
+                end
+            end
+
+            puts &amp;quot;your options are now&amp;quot;
+            puts &amp;quot;~&amp;quot; * 15
+            puts $choice_set
+            puts &amp;quot;~&amp;quot; * 15
+        end
+    end&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Excellent! Now we’re making progress!
+&lt;img src=&quot;https://media.giphy.com/media/40F4fLvOkInEk/giphy.gif&quot; alt=&quot;happy racoon&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;coming-up-next&quot;&gt;Coming Up Next&lt;/h3&gt;
+
+&lt;p&gt;We’ve not got the basic logic functioning, and we’re set to take user input from the command line. My next step is going to be packaging this functionality into a 
+CLI ruby gem, and &lt;em&gt;shipping&lt;/em&gt; a first &lt;em&gt;completed&lt;/em&gt; product - so to speak. C’yall in a few weeks!&lt;/p&gt;
 </content>
  </entry>
  
