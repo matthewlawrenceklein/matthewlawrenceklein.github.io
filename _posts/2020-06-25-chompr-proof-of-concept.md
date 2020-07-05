@@ -18,10 +18,9 @@ I'm going to use these blog posts as an opportunity to chronicle the process of 
 
 I've spent **way** too many nights laying on the couch with a friend or partner doing the back-and-forth dance of "what are you in the mood to eat". It's a vicious cycle of hunger, indecision, and ultimately, the resignation of eventually landing on a choice that no one's particularly excited for. Literally any alternative would be prefarable: a giant plinko board, prize wheel, or even... an **app**. Ideally an app that can help its users choose a meal option
 
-![wheel](https://media.giphy.com/media/iDInMGfkhlsuZGXjGa/giphy.gif){:class="img-responsive"}
+![spin the choice](https://external-preview.redd.it/zC3dcSZFa0BOSk-AbVIqN3vwy7lIKwKnlzs5DGpAz5E.jpg?width=1024&auto=webp&s=2cb4f9c634b5a431978867eeaa765887f4b4bab8){:class="img-responsive"}
 
 
-![choice wheel]
 * easily
 * quickly
 * intuitively
