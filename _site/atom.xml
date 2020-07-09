@@ -4,13 +4,109 @@
  <title>Technical Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2020-07-05T15:26:52-05:00</updated>
+ <updated>2020-07-09T18:10:36-05:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name></name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>SOCCER BUDDY 64</title>
+   <link href="http://localhost:4000/2020/07/09/flatiron-mod1-project-soccer-buddy"/>
+   <updated>2020-07-09T00:00:00-05:00</updated>
+   <id>http://localhost:4000/2020/07/09/Flatiron-Mod1-Project-Soccer-Buddy</id>
+   <content type="html">&lt;h3 id=&quot;soccer-buddy-64&quot;&gt;SOCCER BUDDY 64&lt;/h3&gt;
+
+&lt;p&gt;SOCCER BUDDY 64 is a CLI application built in Ruby using Sinatra ActiveRecord to create our model structure. Our database is seeded from a CSV file of the 2019-2020 English Premiere League soccer schedule. The app allows users to&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Create/Login to their own unique account, persisted in our database&lt;/li&gt;
+  &lt;li&gt;Search for league matches by team or stadium&lt;/li&gt;
+  &lt;li&gt;Add matches to their favorites list&lt;/li&gt;
+  &lt;li&gt;View, sort, and manipulate their favorites list&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;During the build process we experienced a handful of challenges. Some of the major obstacles included&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Parsing data from our original seed file, an XLS spreadsheet&lt;/li&gt;
+  &lt;li&gt;Setting up checks to validate user input and not throw errors&lt;/li&gt;
+  &lt;li&gt;Building out an intuitive and attractive UI&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;spreadsheet-hell---seeding-our-database&quot;&gt;Spreadsheet Hell - Seeding our database&lt;/h2&gt;
+
+&lt;p&gt;Because of the current international pandemic most professional soccer leagues are shuttered, or operating on a much reduced capacity. This means that seeding our database from a live API would yield limited results. Instead, a quick search for &lt;em&gt;soccer database&lt;/em&gt; returned a fully fleshed out .XLS document file. Because .XLS is an outdated filetype (having been replaced with XLSX), there are only a couple of Ruby gems available that were able to parse the file. we ulitmately settled on the Spreadsheet gem, which worked correctly in a test environment. Unforunately, we faced a number of bugs when attempting to implement it in our working environment, with various errors targeting ActiveRecord and the gem itself. After a few hours of failed troubleshooting, we realized we could simply convert the spreadsheet file from XLS to CSV and use Ruby’s built-in CSV library. This solutoin was up and running almost immediately! The only caveat here was the CSV parser was incorrectly interpreting the spreadseet “Date” and “Time” data, instead spitting out static and incorrect data. We decided to scrap implementing time/date functionality and instead focus on what worked.&lt;/p&gt;
+
+&lt;h2 id=&quot;computers-are-dumb-and-so-are-we&quot;&gt;Computers are dumb, and so are we&lt;/h2&gt;
+
+&lt;p&gt;Another hurdle we faced was attempting to account for user error when at all possible. The first solution was to turn to TTY::Prompt, a ruby gem that enabled us to write user-selectable responses. Instead of asking for user responses, we were able to implement a menu of selectable options.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;def add_to_favorites
+   answer = $prompt.select(&amp;quot;Would you like to add a match to your favorites?&amp;quot;.colorize(:color =&amp;gt; :black, :background =&amp;gt; :light_green), &amp;quot;YES&amp;quot;, &amp;quot;NO&amp;quot;)
+        case
+        when answer == &amp;quot;YES&amp;quot;
+            puts &amp;quot;Please select a match by ID&amp;quot;
+            print &amp;quot;&amp;gt; &amp;quot;
+            number = gets.chomp 
+            system(&amp;#39;clear&amp;#39;)
+            Favorite.create(user_id: $user.id, match_id: number)
+            favoriteMatchesAre = TTY::Box.info(&amp;quot;your favorites are now:&amp;quot;)
+            print favoriteMatchesAre 
+            $user.reload
+            $user.matches.each { |match| ap &amp;quot;#{match.home_team} play #{match.away_team} at #{match.location}.&amp;quot; }
+            
+            display_options()
+            user_input()
+        when answer == &amp;quot;NO&amp;quot;
+            system(&amp;#39;clear&amp;#39;)
+            display_options()
+            user_input()
+        end
+end&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The other major validation checkpoint was upon login - We needed a way to check our database of users against the input to see if that user exists. If the user exists, than the current user should be assigned to that user ID. If not, the app should kick back an error and prompt the user for new input. The solution we developed is sloppy, but functional.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;case
+        when answer == &amp;quot;NEW USER&amp;quot;
+            puts &amp;quot;Whats your name?&amp;quot;.colorize(:color =&amp;gt; :black, :background =&amp;gt; :light_green)
+            print &amp;quot;&amp;gt; &amp;quot;
+            name = gets.chomp
+            $user = User.create(name: name)
+            welcomeUser = TTY::Box.success(&amp;quot;Your user ID is #{$user.id}, please remember this number!&amp;quot;)
+            print welcomeUser
+        when answer == &amp;quot;EXISTING USER&amp;quot;
+            puts &amp;quot;Please enter your user ID&amp;quot;
+            print &amp;quot;&amp;gt; &amp;quot;
+            answer_id = gets.chomp   
+            allIds = []
+            User.all.each { |user| allIds &amp;lt;&amp;lt; user.id }
+
+            if allIds.include?(answer_id.to_i)
+                    $user = User.all.find{ |user| user.id == answer_id.to_i }    
+                    welcomeExistingUser = TTY::Box.success(&amp;quot;Welcome back #{$user.name}&amp;quot;)
+                    print welcomeExistingUser
+                else puts TTY::Box.error(&amp;quot;USER ID NOT FOUND SORRY FRIEND&amp;quot;)
+                    
+                    welcome()
+            end
+        end&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;If attempting to access an existing account, the user submits an ID #. An empty array is created, and all existing User.id info in the database is shoveled into the array. Then the array is checked to see if it includes the input data (converted to an integer). If it exists, the user is tied to the existing account.&lt;/p&gt;
+
+&lt;h2 id=&quot;and-it-looks-nice-too&quot;&gt;And it looks nice, too!&lt;/h2&gt;
+
+&lt;p&gt;Once the app was functionally built out, we focused our attention on the user experience. This mainly took the form of contextual colorization, intuitive menu structures, a thorough README, and a demonstration video.&lt;/p&gt;
+
+&lt;h2 id=&quot;stray-thoughts&quot;&gt;Stray thoughts&lt;/h2&gt;
+
+&lt;p&gt;This Mod 1 project was an excellent crash course on code collaboration, time management, troubleshooting, googling, and all the other foundational skills that SWE careers are built on. I’d say overall we’d give the experience an A, A-. Solid project. Good job.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/rJCPOVV.png&quot; alt=&quot;agile development&quot; /&gt;&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>chompr Pt. 1 -  Proof of concept</title>
@@ -150,68 +246,6 @@ end&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;We’ve not got the basic logic functioning, and we’re set to take user input from the command line. My next step is going to be packaging this functionality into a 
 CLI ruby gem, and &lt;em&gt;shipping&lt;/em&gt; a first &lt;em&gt;completed&lt;/em&gt; product - so to speak. C’yall in a few weeks!&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>A second test post</title>
-   <link href="http://localhost:4000/2020/06/22/second-test"/>
-   <updated>2020-06-22T00:00:00-05:00</updated>
-   <id>http://localhost:4000/2020/06/22/second-test</id>
-   <content type="html">&lt;p&gt;borat
-&lt;em&gt;borat&lt;/em&gt;
-&lt;em&gt;borat&lt;/em&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;borat&lt;/p&gt;
-
-  &lt;p&gt;&lt;code&gt;borat&lt;/code&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>This is my test post</title>
-   <link href="http://localhost:4000/2020/06/22/god-is-real"/>
-   <updated>2020-06-22T00:00:00-05:00</updated>
-   <id>http://localhost:4000/2020/06/22/god-is-real</id>
-   <content type="html">&lt;p&gt;This opera’s as lousy as it is brilliant! Your lyrics lack subtlety. You can’t just have your characters announce how they feel. That makes me feel angry!
-We need rest. The spirit is willing, but the flesh is spongy and bruised. How much did you make me? I love this planet! I’ve got wealth, fame, and access to the depths of sleaze that those things bring.&lt;/p&gt;
-
-&lt;p&gt;This opera’s as lousy as it is brilliant! Your lyrics lack subtlety. You can’t just have your characters announce how they feel. That makes me feel angry! With a warning label this big, you know they gotta be fun!&lt;/p&gt;
-
-&lt;p&gt;I love you, buddy!
-Moving along… Hi, I’m a naughty nurse, and I really need someone to talk to. $9.95 a minute. Look, last night was a mistake. I guess if you want children beaten, you have to do it yourself. Oh Leela! You’re the only person I could turn to; you’re the only person who ever loved me.&lt;/p&gt;
-
-&lt;p&gt;Ok, we’ll go deliver this crate like professionals, and then we’ll go ride the bumper cars.
-It’s just like the story of the grasshopper and the octopus. All year long, the grasshopper kept burying acorns for winter, while the octopus mooched off his girlfriend and watched TV. But then the winter came, and the grasshopper died, and the octopus ate all his acorns. Also he got a race car. Is any of this getting through to you?
-You know, I was God once.
-Why did you bring us here?
-Uh, is the puppy mechanical in any way? Good man. Nixon’s pro-war and pro-family. When the lights go out, it’s nobody’s business what goes on between two consenting adults. Do a flip! I’m Santa Claus! When I was first asked to make a film about my nephew, Hubert Farnsworth, I thought “Why should I?” Then later, Leela made the film. But if I did make it, you can bet there would have been more topless women on motorcycles. Roll film!&lt;/p&gt;
-
-&lt;p&gt;No argument here.
-Negative, bossy meat creature!
-When will that be?
-Stop it, stop it. It’s fine. I will ‘destroy’ you! I’m just glad my fat, ugly mama isn’t alive to see this day. I haven’t felt much of anything since my guinea pig died. Fatal.&lt;/p&gt;
-
-&lt;p&gt;Large bet on myself in round one. Shut up and take my money! I wish! It’s a nickel. When will that be? You guys aren’t Santa! You’re not even robots. How dare you lie in front of Jesus? And remember, don’t do anything that affects anything, unless it turns out you were supposed to, in which case, for the love of God, don’t not do it!&lt;/p&gt;
-
-&lt;p&gt;Man, I’m sore all over. I feel like I just went ten rounds with mighty Thor. Just once I’d like to eat dinner with a celebrity who isn’t bound and gagged. I suppose I could part with ‘one’ and still be feared…&lt;/p&gt;
-
-&lt;p&gt;And when we woke up, we had these bodies. Why not indeed! I love you, buddy! You’re going back for the Countess, aren’t you?&lt;/p&gt;
-
-&lt;p&gt;That could be ‘my’ beautiful soul sitting naked on a couch. If I could just learn to play this stupid thing. Also Zoidberg. You guys go on without me! I’m going to go… look for more stuff to steal!&lt;/p&gt;
-
-&lt;p&gt;But, like most politicians, he promised more than he could deliver. Goodbye, cruel world. Goodbye, cruel lamp. Goodbye, cruel velvet drapes, lined with what would appear to be some sort of cruel muslin and the cute little pom-pom curtain pull cords. Cruel though they may be…&lt;/p&gt;
-
-&lt;p&gt;Okay, it’s 500 dollars, you have no choice of carrier, the battery can’t hold the charge and the reception isn’t very… When will that be? Perhaps, but perhaps your civilization is merely the sewer of an even greater society above you!&lt;/p&gt;
-
-&lt;p&gt;My fellow Earthicans, as I have explained in my book ‘Earth in the Balance’’, and the much more popular ‘‘Harry Potter and the Balance of Earth’, we need to defend our planet against pollution. Also dark wizards. You can see how I lived before I met you.&lt;/p&gt;
-
-&lt;p&gt;Ok, we’ll go deliver this crate like professionals, and then we’ll go ride the bumper cars. Oh, all right, I am. But if anything happens to me, tell them I died robbing some old man. I’ll get my kit! And I’m his friend Jesus.&lt;/p&gt;
-
-&lt;p&gt;Well I’da done better, but it’s plum hard pleading a case while awaiting trial for that there incompetence. Bender?! You stole the atom. Now what? Now Fry, it’s been a few years since medical school, so remind me. Disemboweling in your species: fatal or non-fatal?&lt;/p&gt;
-
-&lt;p&gt;You’ll have all the Slurm you can drink when you’re partying with Slurms McKenzie! Why, those are the Grunka-Lunkas! They work here in the Slurm factory. You guys go on without me! I’m going to go… look for more stuff to steal!&lt;/p&gt;
 </content>
  </entry>
  

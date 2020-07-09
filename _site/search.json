@@ -2,34 +2,23 @@
   
     {
 
+      "title"    : "SOCCER BUDDY 64",
+      "url"      : "/2020/07/09/flatiron-mod1-project-soccer-buddy",
+      "category" : "",
+      "tags"     : "css",
+      "date"     : "2020-07-09 00:00:00 -0500",
+      "discription" : "A Flatiron Mod 1 CLI application"
+
+    } ,
+  
+    {
+
       "title"    : "chompr Pt. 1 -  Proof of concept",
       "url"      : "/2020/06/25/chompr-proof-of-concept",
       "category" : "",
       "tags"     : "css",
       "date"     : "2020-06-25 00:00:00 -0500",
       "discription" : "Pt. 1 - Proof of concept"
-
-    } ,
-  
-    {
-
-      "title"    : "A second test post",
-      "url"      : "/2020/06/22/second-test",
-      "category" : "",
-      "tags"     : "css",
-      "date"     : "2020-06-22 00:00:00 -0500",
-      "discription" : "oh god im testing im testing"
-
-    } ,
-  
-    {
-
-      "title"    : "This is my test post",
-      "url"      : "/2020/06/22/god-is-real",
-      "category" : "",
-      "tags"     : "css",
-      "date"     : "2020-06-22 00:00:00 -0500",
-      "discription" : "This is my first sample post for my cool cool blog"
 
     } 
   
