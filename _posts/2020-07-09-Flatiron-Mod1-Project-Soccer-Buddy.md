@@ -26,6 +26,13 @@ During the build process we experienced a handful of challenges. Some of the maj
 
 Because of the current international pandemic most professional soccer leagues are shuttered, or operating on a much reduced capacity. This means that seeding our database from a live API would yield limited results. Instead, a quick search for _soccer database_ returned a fully fleshed out .XLS document file. Because .XLS is an outdated filetype (having been replaced with XLSX), there are only a couple of Ruby gems available that were able to parse the file. we ulitmately settled on the Spreadsheet gem, which worked correctly in a test environment. Unforunately, we faced a number of bugs when attempting to implement it in our working environment, with various errors targeting ActiveRecord and the gem itself. After a few hours of failed troubleshooting, we realized we could simply convert the spreadsheet file from XLS to CSV and use Ruby's built-in CSV library. This solutoin was up and running almost immediately! The only caveat here was the CSV parser was incorrectly interpreting the spreadseet "Date" and "Time" data, instead spitting out static and incorrect data. We decided to scrap implementing time/date functionality and instead focus on what worked. 
 
+{% highlight ruby %}
+data = CSV.read("EPL_Fixturelist_1920.csv")
+data.each do |row|
+    Match.create(home_team: row[1], away_team: row[5], location: row[6], date: row[2])
+end
+{% endhighlight %}
+
 ## Computers are dumb, and so are we
 
 Another hurdle we faced was attempting to account for user error when at all possible. The first solution was to turn to TTY::Prompt, a ruby gem that enabled us to write user-selectable responses. Instead of asking for user responses, we were able to implement a menu of selectable options. 
