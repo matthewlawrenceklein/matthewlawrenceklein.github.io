@@ -7,6 +7,7 @@ tags: [css]
 ---
 
 ### SOCCER BUDDY 64
+![Soccer Buddy](https://raw.githubusercontent.com/matthewlawrenceklein/ruby-project-guidelines-chi01-seng-ft-062220/Jacob/Images/N64%20SUPPER%20SOCCER%20BUDDY%2064.jpg)
 
 SOCCER BUDDY 64 is a CLI application built in Ruby using Sinatra ActiveRecord to create our model structure. Our database is seeded from a CSV file of the 2019-2020 English Premiere League soccer schedule. The app allows users to
 
