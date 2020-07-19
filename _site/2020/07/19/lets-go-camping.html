@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Jekyll v4.0.0" /><meta property="og:title" content="Everything’s on Fire - Let’s go camping!" /><meta property="og:locale" content="en_US" /><meta name="description" content="first steps into the Camping Ruby Micro Framework" /><meta property="og:description" content="first steps into the Camping Ruby Micro Framework" /><link rel="canonical" href="http://localhost:4000/2020/07/19/lets-go-camping" /><meta property="og:url" content="http://localhost:4000/2020/07/19/lets-go-camping" /><meta property="og:site_name" content="Technical Blog" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2020-07-19T00:00:00-05:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Everything’s on Fire - Let’s go camping!" /><meta name="twitter:site" content="@" /> <script type="application/ld+json"> {"headline":"Everything’s on Fire - Let’s go camping!","dateModified":"2020-07-19T00:00:00-05:00","description":"first steps into the Camping Ruby Micro Framework","datePublished":"2020-07-19T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2020/07/19/lets-go-camping"},"@type":"BlogPosting","url":"http://localhost:4000/2020/07/19/lets-go-camping","@context":"https://schema.org"}</script><title> Everything&#39;s on Fire - Let&#39;s go camping! - Technical Blog</title><link rel="shortcut icon" href="/favicon.png"><link rel="alternate" type="application/atom+xml" title="Technical Blog" href="/atom.xml"><link rel="alternate" type="application/json" title="Technical Blog" href="http://localhost:4000/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a;background-color:#E6F6F3}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">Technical Blog</h1>--><nav role="navigation"><ul><li><a href="/" >Writing</a></li><li><a href="/about" >About</a></li><li><a href="/search" >Search</a></li></ul></nav></header><section class="post"><h2>Everything's on Fire - Let's go camping!</h2><h2 id="a-visual-introduction-to-ruby-frameworks">A visual introduction to Ruby frameworks</h2><p>As we begin moving away from the terminal and into full-fledged web development, we start to examine and work within some Ruby frameworks. First, we touched on Sinatra. <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2827&amp;q=80" alt="a regular cat" /> Sinatra is a regular cat - not too smart, not too dumb, knows how to do some stuff, but you’re gonna have to teach it to do most anything useful. I like regular cats. They’re great to play with, and can even provide all sorts of teachable moments! As a first pet…i mean framework, Sinatra/regular cat is a solid jumping off point.</p><h3 id="then-theres-rails">Then there’s Rails</h3><p><img src="https://images.unsplash.com/photo-1471123327422-e370dc57a3da?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2422&amp;q=80" alt="a big lion" /> Rails is a lion - big, powerful, intimidating, and definitely not a candidate for your first pet. But, as we maybe (kind of?) learned from the Netflix series Tiger King, those that can harness the power of big cats can accomplish truly great (?) things. Github itself was built on a Rails backend! The first time you run <code>rails new Project</code> in your console and a few hundred files, folders, dependencies, and sub-libraries are generated in a flash is truly an awe-inspiring experience. Learning to navigate the file structures that rails builds for you, and slowly incorporating the various helper methods that rails provide is immensley gratifying. Heck, the first time I ran <code>rails g scaffold Student name age:integer....</code> and watched as it created all the requisite MVC files, classes, db migration, and so on that I had previously spent <em>hours</em> learning to build out in a basic Sinatra app, I really began to understand all this talk of <strong>rails magic</strong>.</p><p>But ultimate, rails is an undertaking. It’s extensive, layered, and has taken (me at least) hours upon hours of trial and error, googling, and headshaking to make progress in. I can imagine a scenario where I have an idea for a simple app, but maybe don’t want to do all the legwork involved with getting a rails project off the ground.</p><h3 id="enter-camping">Enter Camping</h3><p><img src="https://images.unsplash.com/photo-1542736143-29a8432162bc?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=3150&amp;q=80" alt="kitten" /> Camping is a ruby micro-framework created by, as far as I can tell, a few weirdos who have more or less removed their presence from the internet. Camping is tiny - the entire framework source code is less than <strong>4 kb</strong>. What’s more, Camping’s core ethos is that your entire app can/should be contained in a single ruby document. Your MVC all exist simultaneously in one place. While you’re free to build out other pages and <code>require_relative</code> them, Camping excels at being an agile launch pad for ideas.</p><p>With the camping gem installed (it’s recommended you install the camping omnibus, as it includes markaby - more on that in a bit), All you need to do to get rolling is drop <code>Camping.goes :AppName</code> at the top of your ruby document. Running <code>$ camping appname.rb</code> in console will fire up a live server, and your project is up and running! Start by building out some views</p><figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">module SandwichLad::Views
+    def layout
+        html do
+            title { &#39;Sandwich Lad&#39; }
+            body { 
+                h1 &#39;Welcome to Sandwich Lad&#39;
+                h2 &quot;it&#39;s #{Time.now}, time to talk-a sandwich&quot;  
+                self &lt;&lt; yield 
+            
+            }
+            footer {
+                h4 &quot;COPYRIGHT IN PERPETUITY&quot;
+            }
+        end
+    end
+
+    def landing
+        body :id =&gt; :frontpage do
+            h3 &#39;its my sandwich world&#39;, :class =&gt; :main
+            ul do    
+                div do a &#39;add sandwich&#39;, :href =&gt; &#39;/sandwiches/new&#39; end 
+                div do a &#39;see sandwiches&#39;, :href =&gt; &#39;/sandwiches&#39; end 
+            end 
+        end
+    end
+end</code></pre></figure><p>and then associate those views with some controllers via routes</p><figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">module SandwichLad::Controllers
+    class Index &lt; R &#39;/&#39;
+        def get
+            render :landing
+        end
+    end
+
+    class NewSandwich &lt; R &#39;/sandwiches/new&#39;
+        def get
+            render :new_sandwich    
+        end
+    end
+
+    class IndexSandwich &lt; R &#39;/sandwiches&#39;
+        def get
+            render :sandwiches 
+        end
+    end 
+end</code></pre></figure><p>Notice all that inline html? That’s markaby! Markaby (Markup as Ruby) is a relatively straightforward alternative to erb with lousy documentation, but solid usability! We can even link to an external css stylesheet to style our app. Now we’re up to a whopping 2 files!</p><p>Finally, we can build out a model and initial table migration.</p><figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">module SandwichLad::Models
+    class Sandwich &lt; Base
+    end
+
+    class BasicFields &lt; ActiveRecord::Migration[4.2]
+        def self.up
+          create_table Sandwich.create_sandwiches do |t|
+            t.string :name
+            t.text   :bread
+            t.text   :cheese
+            t.text   :proteins
+            t.text   :condiments
+            # This gives us created_at and updated_at
+            t.timestamps
+          end 
+        end
+
+        def self.down
+            drop_table Sandwich.create_sandwiches
+        end
+    end
+end
+
+
+def SandwichLad.create
+    SandwichLad::Models.create_schema
+end</code></pre></figure><p>Our Basicfield class inherits from Active Record, and our schema gets created once the app is instanciated via the <code>SandwichLad.create</code> method. At this point we’ve written out a very basic MVC pattern in under 100 lines of code, in a single ruby document. Neat! And while Camping is surely not an alternative for larger, more in-depth projects, it’s comforting to know there’s an option to speedily map out app ideas. As the saying goes, the right tool for the job, the right cat for the app. <img src="https://www.northumbriacommunity.org/wp-content/uploads/2013/05/kitten-lion-mirror.jpg" alt="mirror cat" /></p><span class="meta"><time datetime="2020-07-19T00:00:00-05:00">July 19, 2020</time> &middot; <a href="/tag/css">css</a></span> <!--<span class="meta"><time datetime="2020-07-19T00:00:00-05:00">July 19, 2020</time> &middot; <a class="post" href="/tag/css">css</a></span> --></section></main></body></html>

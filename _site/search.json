@@ -2,6 +2,17 @@
   
     {
 
+      "title"    : "Everything&#39;s on Fire - Let&#39;s go camping!",
+      "url"      : "/2020/07/19/lets-go-camping",
+      "category" : "",
+      "tags"     : "css",
+      "date"     : "2020-07-19 00:00:00 -0500",
+      "discription" : "first steps into the Camping Ruby Micro Framework"
+
+    } ,
+  
+    {
+
       "title"    : "SOCCER BUDDY 64",
       "url"      : "/2020/07/09/flatiron-mod1-project-soccer-buddy",
       "category" : "",

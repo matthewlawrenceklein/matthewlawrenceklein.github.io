@@ -4,7 +4,7 @@
  <title>Technical Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2020-07-09T18:10:36-05:00</updated>
+ <updated>2020-07-19T16:53:46-05:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name></name>
@@ -13,11 +13,119 @@
 
  
  <entry>
+   <title>Everything's on Fire - Let's go camping!</title>
+   <link href="http://localhost:4000/2020/07/19/lets-go-camping"/>
+   <updated>2020-07-19T00:00:00-05:00</updated>
+   <id>http://localhost:4000/2020/07/19/lets-go-camping</id>
+   <content type="html">&lt;h2 id=&quot;a-visual-introduction-to-ruby-frameworks&quot;&gt;A visual introduction to Ruby frameworks&lt;/h2&gt;
+
+&lt;p&gt;As we begin moving away from the terminal and into full-fledged web development, we start to examine and work within some Ruby frameworks. First, we touched on Sinatra. 
+&lt;img src=&quot;https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-1.2.1&amp;amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;amp;auto=format&amp;amp;fit=crop&amp;amp;w=2827&amp;amp;q=80&quot; alt=&quot;a regular cat&quot; /&gt;
+Sinatra is a regular cat - not too smart, not too dumb, knows how to do some stuff, but you’re gonna have to teach it to do most anything useful. I like regular cats. They’re great to play with, and can even provide all sorts of teachable moments! As a first pet…i mean framework, Sinatra/regular cat is a solid jumping off point.&lt;/p&gt;
+&lt;h3 id=&quot;then-theres-rails&quot;&gt;Then there’s Rails&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;https://images.unsplash.com/photo-1471123327422-e370dc57a3da?ixlib=rb-1.2.1&amp;amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;amp;auto=format&amp;amp;fit=crop&amp;amp;w=2422&amp;amp;q=80&quot; alt=&quot;a big lion&quot; /&gt;
+Rails is a lion - big, powerful, intimidating, and definitely not a candidate for your first pet. But, as we maybe (kind of?) learned from the Netflix series Tiger King, those that can harness the power of big cats can accomplish truly great (?) things. Github itself was built on a Rails backend! The first time you run &lt;code&gt;rails new Project&lt;/code&gt; in your console and a few hundred files, folders, dependencies, and sub-libraries are generated in a flash is truly an awe-inspiring experience. Learning to navigate the file structures that rails builds for you, and slowly incorporating the various helper methods that rails provide is immensley gratifying. Heck, the first time I ran &lt;code&gt;rails g scaffold Student name age:integer....&lt;/code&gt; and watched as it created all the requisite MVC files, classes, db migration, and so on that I had previously spent &lt;em&gt;hours&lt;/em&gt; learning to build out in a basic Sinatra app, I really began to understand all this talk of &lt;strong&gt;rails magic&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;But ultimate, rails is an undertaking. It’s extensive, layered, and has taken (me at least) hours upon hours of trial and error, googling, and headshaking to make progress in. I can imagine a scenario where I have an idea for a simple app, but maybe don’t want to do all the legwork involved with getting a rails project off the ground.&lt;/p&gt;
+&lt;h3 id=&quot;enter-camping&quot;&gt;Enter Camping&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;https://images.unsplash.com/photo-1542736143-29a8432162bc?ixlib=rb-1.2.1&amp;amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;amp;auto=format&amp;amp;fit=crop&amp;amp;w=3150&amp;amp;q=80&quot; alt=&quot;kitten&quot; /&gt;
+Camping is a ruby micro-framework created by, as far as I can tell, a few weirdos who have more or less removed their presence from the internet. Camping is tiny - the entire framework source code is less than &lt;strong&gt;4 kb&lt;/strong&gt;. What’s more, Camping’s core ethos is that your entire app can/should be contained in a single ruby document. Your MVC all exist simultaneously in one place. While you’re free to build out other pages and &lt;code&gt;require_relative&lt;/code&gt; them, Camping excels at being an agile launch pad for ideas.&lt;/p&gt;
+
+&lt;p&gt;With the camping gem installed (it’s recommended you install the camping omnibus, as it includes markaby - more on that in a bit), All you need to do to get rolling is drop &lt;code&gt;Camping.goes :AppName&lt;/code&gt; at the top of your ruby document. Running &lt;code&gt;$ camping appname.rb&lt;/code&gt; in console will fire up a live server, and your project is up and running! Start by building out some views&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;module SandwichLad::Views
+    def layout
+        html do
+            title { &amp;#39;Sandwich Lad&amp;#39; }
+            body { 
+                h1 &amp;#39;Welcome to Sandwich Lad&amp;#39;
+                h2 &amp;quot;it&amp;#39;s #{Time.now}, time to talk-a sandwich&amp;quot;  
+                self &amp;lt;&amp;lt; yield 
+            
+            }
+            footer {
+                h4 &amp;quot;COPYRIGHT IN PERPETUITY&amp;quot;
+            }
+        end
+    end
+
+    def landing
+        body :id =&amp;gt; :frontpage do
+            h3 &amp;#39;its my sandwich world&amp;#39;, :class =&amp;gt; :main
+            ul do    
+                div do a &amp;#39;add sandwich&amp;#39;, :href =&amp;gt; &amp;#39;/sandwiches/new&amp;#39; end 
+                div do a &amp;#39;see sandwiches&amp;#39;, :href =&amp;gt; &amp;#39;/sandwiches&amp;#39; end 
+            end 
+        end
+    end
+end&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;and then associate those views with some controllers via routes&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;module SandwichLad::Controllers
+    class Index &amp;lt; R &amp;#39;/&amp;#39;
+        def get
+            render :landing
+        end
+    end
+
+    class NewSandwich &amp;lt; R &amp;#39;/sandwiches/new&amp;#39;
+        def get
+            render :new_sandwich    
+        end
+    end
+
+    class IndexSandwich &amp;lt; R &amp;#39;/sandwiches&amp;#39;
+        def get
+            render :sandwiches 
+        end
+    end 
+end&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Notice all that inline html? That’s markaby! Markaby (Markup as Ruby) is a relatively straightforward alternative to erb with lousy documentation, but solid usability! We can even link to an external css stylesheet to style our app. Now we’re up to a whopping 2 files!&lt;/p&gt;
+
+&lt;p&gt;Finally, we can build out a model and initial table migration.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;module SandwichLad::Models
+    class Sandwich &amp;lt; Base
+    end
+
+    class BasicFields &amp;lt; ActiveRecord::Migration[4.2]
+        def self.up
+          create_table Sandwich.create_sandwiches do |t|
+            t.string :name
+            t.text   :bread
+            t.text   :cheese
+            t.text   :proteins
+            t.text   :condiments
+            # This gives us created_at and updated_at
+            t.timestamps
+          end 
+        end
+
+        def self.down
+            drop_table Sandwich.create_sandwiches
+        end
+    end
+end
+
+
+def SandwichLad.create
+    SandwichLad::Models.create_schema
+end&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Our Basicfield class inherits from Active Record, and our schema gets created once the app is instanciated via the &lt;code&gt;SandwichLad.create&lt;/code&gt; method. At this point we’ve written out a very basic MVC pattern in under 100 lines of code, in a single ruby document. Neat! And while Camping is surely not an alternative for larger, more in-depth projects, it’s comforting to know there’s an option to speedily map out app ideas. As the saying goes, the right tool for the job, the right cat for the app. 
+&lt;img src=&quot;https://www.northumbriacommunity.org/wp-content/uploads/2013/05/kitten-lion-mirror.jpg&quot; alt=&quot;mirror cat&quot; /&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>SOCCER BUDDY 64</title>
    <link href="http://localhost:4000/2020/07/09/flatiron-mod1-project-soccer-buddy"/>
    <updated>2020-07-09T00:00:00-05:00</updated>
    <id>http://localhost:4000/2020/07/09/Flatiron-Mod1-Project-Soccer-Buddy</id>
    <content type="html">&lt;h3 id=&quot;soccer-buddy-64&quot;&gt;SOCCER BUDDY 64&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/matthewlawrenceklein/ruby-project-guidelines-chi01-seng-ft-062220/Jacob/Images/N64%20SUPPER%20SOCCER%20BUDDY%2064.jpg&quot; alt=&quot;Soccer Buddy&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;SOCCER BUDDY 64 is a CLI application built in Ruby using Sinatra ActiveRecord to create our model structure. Our database is seeded from a CSV file of the 2019-2020 English Premiere League soccer schedule. The app allows users to&lt;/p&gt;
 
@@ -39,6 +147,11 @@
 &lt;h2 id=&quot;spreadsheet-hell---seeding-our-database&quot;&gt;Spreadsheet Hell - Seeding our database&lt;/h2&gt;
 
 &lt;p&gt;Because of the current international pandemic most professional soccer leagues are shuttered, or operating on a much reduced capacity. This means that seeding our database from a live API would yield limited results. Instead, a quick search for &lt;em&gt;soccer database&lt;/em&gt; returned a fully fleshed out .XLS document file. Because .XLS is an outdated filetype (having been replaced with XLSX), there are only a couple of Ruby gems available that were able to parse the file. we ulitmately settled on the Spreadsheet gem, which worked correctly in a test environment. Unforunately, we faced a number of bugs when attempting to implement it in our working environment, with various errors targeting ActiveRecord and the gem itself. After a few hours of failed troubleshooting, we realized we could simply convert the spreadsheet file from XLS to CSV and use Ruby’s built-in CSV library. This solutoin was up and running almost immediately! The only caveat here was the CSV parser was incorrectly interpreting the spreadseet “Date” and “Time” data, instead spitting out static and incorrect data. We decided to scrap implementing time/date functionality and instead focus on what worked.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;data = CSV.read(&amp;quot;EPL_Fixturelist_1920.csv&amp;quot;)
+data.each do |row|
+    Match.create(home_team: row[1], away_team: row[5], location: row[6], date: row[2])
+end&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h2 id=&quot;computers-are-dumb-and-so-are-we&quot;&gt;Computers are dumb, and so are we&lt;/h2&gt;
 
