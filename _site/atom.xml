@@ -4,13 +4,120 @@
  <title>Technical Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2020-07-19T16:53:46-05:00</updated>
+ <updated>2020-08-10T21:15:22-05:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name></name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>There's still a fire! Let's make a game!</title>
+   <link href="http://localhost:4000/2020/08/10/kontra-js"/>
+   <updated>2020-08-10T00:00:00-05:00</updated>
+   <id>http://localhost:4000/2020/08/10/kontra-js</id>
+   <content type="html">&lt;h2 id=&quot;a-first-look-at-the-kontrajs-javascript-gaming-micro-libray&quot;&gt;A first look at the Kontra.js javascript gaming micro-libray&lt;/h2&gt;
+
+&lt;p&gt;In the giant world of software development, there is truly an awe-inspiring array of options for solving any problem, tackling any project, or building any app. Languages, stacks, design patterns, frameworks, the list goes on! Personally, I’ve found a certain &lt;em&gt;kindred spirit&lt;/em&gt; amongst those that abide by the philosophy of “build it first, build it fast, figure out the rest later”. Even though Rails is a deep and thorough framework, the ability to get a rails app scaffolded and running in 20 minutes was revolutionary for web development.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://efangelist.files.wordpress.com/2014/08/ifyoubuildittheywillcome.png&quot; alt=&quot;get it built!&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Continuing on in the spirit of the Camping ruby micro-framework, I’ve taken a first look at Kontra.js, a javascript gaming micro-framework. Created for a javascript Game-Jam event where developers were limited to a miniscule file-size, Kontra clocks in at a whopping 14kb. While often used to prototype games, or to get up and running quickly, Kontra’s first commercial release was the Jackbox Games’ “Murder Party”, topping out at over a million units sold. Let’s take a look!&lt;/p&gt;
+
+&lt;p&gt;Importing the initialize functipon from the Kontra library allows the game to run and build the game canvas.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import { init } from 'kontra';
+
+let { canvas, context } = init();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we can import the Sprite and Gameloop methods to easily build out a simple sprite and event loop.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import { init, Sprite, GameLoop } from 'kontra';
+
+let { canvas } = init();
+
+let sprite = Sprite({
+  x: 100,        // starting x,y position of the sprite
+  y: 80,
+  color: 'red',  // fill color of the sprite rectangle
+  width: 20,     // width and height of the sprite rectangle
+  height: 40,
+  dx: 2          // move the sprite 2px to the right every frame
+});
+
+let loop = GameLoop({  // create the main game loop
+  update: function() { // update the game state
+    sprite.update();
+
+    // wrap the sprites position when it reaches
+    // the edge of the screen
+    if (sprite.x &amp;gt; canvas.width) {
+      sprite.x = -sprite.width;
+    }
+  },
+  render: function() { // render the game state
+    sprite.render();
+  }
+});
+
+loop.start();    // start the game
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Look at that! We’ve got some stuff moving around the screen. That’s practically a game! Handling user-input is just as intuitive, using the Kontra “keyPressed” method. Imagine your game allowed the player to pilot a ship.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;let ship = kontra.Sprite({
+  x: 300,
+  y: 300,
+  width: 6,  // we'll use this later for collision detection
+  rotation: 0,  // 0 degrees is to the right
+  render() {
+    this.context.save();
+    
+    // transform the origin and rotate around it 
+    // using the ships rotation
+    this.context.translate(this.x, this.y);
+    this.context.rotate(degreesToRadians(this.rotation));
+    
+    // draw a right facing triangle
+    this.context.beginPath();
+    this.context.moveTo(-3, -5);
+    this.context.lineTo(12, 0);
+    this.context.lineTo(-3, 5);
+    this.context.closePath();
+    this.context.stroke();
+    this.context.restore();
+  },
+  update() {
+    // rotate the ship left or right
+    if (kontra.keyPressed('left')) {
+      this.rotation += -4
+    }
+    else if (kontra.keyPressed('right')) {
+      this.rotation += 4
+    }
+
+        // move the ship forward in the direction it's facing
+    const cos = Math.cos(degreesToRadians(this.rotation));
+    const sin = Math.sin(degreesToRadians(this.rotation));
+    
+    if (kontra.keyPressed('up')) {
+        this.ddx = cos * 0.05;
+        this.ddy = sin * 0.05;
+    }
+    this.advance();
+  }
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/1400/1*s755uqld64G8wfS9XpGzjA.png&quot; alt=&quot;now were zoomin&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Pretty exciting stuff, right? The Kontra.js site lists off dozens of games built with the library that are available to play, along with their github repositories. Starting small never felt so big!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/fkEiwLW.png&quot; alt=&quot;games!&quot; /&gt;&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Everything's on Fire - Let's go camping!</title>
